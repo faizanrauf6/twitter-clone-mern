@@ -1,1 +1,1 @@
-# twitter-clone-mern
+# Twitter Clone MERN
