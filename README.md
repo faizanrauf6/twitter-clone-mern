@@ -16,7 +16,7 @@ Install twitter-clone with npm
   For Front-end Project
   cd client
   npm install -f
-  npm start
+  npm run dev
 
   For Back-end Project
   cd server
