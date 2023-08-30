@@ -1,18 +1,39 @@
 {
-  "name": "server",
+  "name": "twitter-clone-mern-be",
   "version": "1.0.0",
-  "description": "",
+  "description": "Twitter Clone Backend",
   "main": "index.js",
   "scripts": {
-    "start":"node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faizanrauf6/twitter-clone-mern.git"
+  },
+  "author": "faizanrauf6",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1358.0",
+    "axios": "^1.4.0",
+    "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "joi": "^17.10.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.3",
+    "multer": "^1.4.5-lts.1",
+    "multer-s3": "^2.10.0",
+    "node-cron": "^3.0.2",
+    "nodemailer": "^6.9.1",
+    "otp-generator": "^4.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
