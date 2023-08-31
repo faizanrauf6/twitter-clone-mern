@@ -1,7 +1,7 @@
 {
-  "name": "twitter-clone-mern-be",
+  "name": "salesmind-be",
   "version": "1.0.0",
-  "description": "Twitter Clone Backend",
+  "description": "Sales Mind App Backend",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,10 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/faizanrauf6/twitter-clone-mern.git"
+    "url": "git+https://github.com/Techtimize/SalesMind-BE.git"
   },
-  "author": "faizanrauf6",
+  "author": "Techtimize",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Techtimize/SalesMind-BE/issues"
+  },
+  "homepage": "https://github.com/Techtimize/SalesMind-BE#readme",
   "dependencies": {
     "aws-sdk": "^2.1358.0",
     "axios": "^1.4.0",

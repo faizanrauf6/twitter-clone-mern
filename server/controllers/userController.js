@@ -50,6 +50,7 @@ exports.signUp = async (req, res) => {
       username,
       email,
       password: hashedPassword,
+      slug: username.trim().toLowerCase().replace(/\s+/g, "-"),
     });
 
     await newUser.save();
@@ -96,7 +97,7 @@ exports.signIn = async (req, res) => {
     // Check if the user with the provided email exists
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({
+      return res.status(400).json({
         statusCode: 0,
         message: "Invalid credentials",
         data: null,
@@ -109,7 +110,7 @@ exports.signIn = async (req, res) => {
       user.password
     );
     if (!isPasswordCorrect) {
-      return res.status(401).json({
+      return res.status(400).json({
         statusCode: 0,
         message: "Invalid password",
         data: null,
@@ -145,23 +146,14 @@ exports.signIn = async (req, res) => {
  */
 exports.signOut = async (req, res) => {
   try {
-    const userId = req.params.userId; // Assuming userId is passed as a route parameter
+    const { id } = req.user;
 
     // Retrieve the user from the database based on the provided userId
-    const user = await User.findById(userId);
+    const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({
         statusCode: 0,
         message: "User not found",
-        data: null,
-      });
-    }
-
-    // Check if the authenticated user matches the user requesting sign-out
-    if (req.user.id !== userId) {
-      return res.status(401).json({
-        statusCode: 0,
-        message: "Access denied",
         data: null,
       });
     }
@@ -193,21 +185,12 @@ exports.signOut = async (req, res) => {
  */
 exports.getUserDetails = async (req, res) => {
   try {
-    const userId = req.params.userId; // Assuming userId is passed as a route parameter
-
-    // Check if the authenticated user's ID matches the requested user's ID
-    if (req.user.id !== userId) {
-      return res.status(401).json({
-        statusCode: 0,
-        message: "Access denied",
-        data: null,
-      });
-    }
+    const { id } = req.user;
 
     // Retrieve the user's complete details from the database and populate followers and following
-    const userDetails = await User.findById(userId)
-      .populate("followers", "fullName username")
-      .populate("following", "fullName username");
+    const userDetails = await User.findById(id)
+      .populate("followers", "fullName username verified slug")
+      .populate("following", "fullName username verified slug");
 
     if (!userDetails) {
       return res.status(404).json({
@@ -253,8 +236,8 @@ exports.me = async (req, res) => {
     // Retrieve the user's complete details from the database and populate followers and following
     const userDetails = await User.findById(req.user.id)
       .select("-password")
-      .populate("followers", "fullName username")
-      .populate("following", "fullName username");
+      .populate("followers", "fullName username verified slug")
+      .populate("following", "fullName username verified slug");
 
     if (!userDetails) {
       return res.status(404).json({
@@ -293,24 +276,60 @@ exports.me = async (req, res) => {
 /**
  * @param {*} req request data
  * @param {*} res for sending response
- * @returns User will be able to follow another user
+ * @returns View user details via username
  */
-exports.followUser = async (req, res) => {
+exports.viewProfile = async (req, res) => {
   try {
-    const { userId } = req.body; // ID of the authenticated user
-    const followUserId = req.params.followUserId; // ID of the user to be followed
+    const { slug } = req.params;
+    // Retrieve the user's complete details from the database and populate followers and following
+    const userDetails = await User.findOne({ slug }).select("-password");
 
-    // Check if the authenticated user's ID matches the requested user's ID
-    if (req.user.id !== userId) {
-      return res.status(401).json({
+    if (!userDetails) {
+      return res.status(404).json({
         statusCode: 0,
-        message: "Access denied",
+        message: "User not found",
         data: null,
       });
     }
 
+    // Calculate the total count of followers and followed users
+    const followersCount = userDetails.followers.length;
+    const followedCount = userDetails.following.length;
+
+    // Add the counts to the user details object
+    const userDetailsWithCounts = {
+      ...userDetails.toObject(),
+      followersCount,
+      followedCount,
+    };
+
+    return res.status(200).json({
+      statusCode: 1,
+      message: "User profile information retrieved successfully",
+      data: userDetailsWithCounts,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      statusCode: 0,
+      message: "Internal server error",
+      data: null,
+    });
+  }
+};
+
+/**
+ * @param {*} req request data
+ * @param {*} res for sending response
+ * @returns User will be able to follow another user
+ */
+exports.followUser = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const followUserId = req.params.followUserId; // ID of the user to be followed
+
     // Check if the authenticated user is trying to follow themselves
-    if (userId === followUserId) {
+    if (id === followUserId) {
       return res.status(400).json({
         statusCode: 0,
         message: "You cannot follow yourself",
@@ -319,7 +338,7 @@ exports.followUser = async (req, res) => {
     }
 
     // Find the authenticated user and the user to be followed
-    const user = await User.findById(userId);
+    const user = await User.findById(id);
     const followUser = await User.findById(followUserId);
 
     if (!user || !followUser) {
@@ -341,7 +360,7 @@ exports.followUser = async (req, res) => {
 
     // Update the follower and following lists for both users
     user.following.push(followUserId);
-    followUser.followers.push(userId);
+    followUser.followers.push(id);
 
     // Update follow counts
     user.followCount += 1;
@@ -373,20 +392,11 @@ exports.followUser = async (req, res) => {
  */
 exports.unfollowUser = async (req, res) => {
   try {
-    const { userId } = req.body; // ID of the authenticated user
+    const { id } = req.user;
     const unfollowUserId = req.params.unfollowUserId; // ID of the user to be unfollowed
 
-    // Check if the authenticated user's ID matches the requested user's ID
-    if (req.user.id !== userId) {
-      return res.status(401).json({
-        statusCode: 0,
-        message: "Access denied",
-        data: null,
-      });
-    }
-
     // Find the authenticated user and the user to be unfollowed
-    const user = await User.findById(userId);
+    const user = await User.findById(id);
     const unfollowUser = await User.findById(unfollowUserId);
 
     if (!user || !unfollowUser) {
@@ -411,7 +421,7 @@ exports.unfollowUser = async (req, res) => {
       (id) => id.toString() !== unfollowUserId
     );
     unfollowUser.followers = unfollowUser.followers.filter(
-      (id) => id.toString() !== userId
+      (id) => id.toString() === id
     );
 
     // Update follow counts

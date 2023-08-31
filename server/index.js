@@ -16,8 +16,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // Import routers
 const userRouter = require("./routers/userRoute");
+const tweetRouter = require("./routers/tweetRoute");
 
 app.use("/api/users", userRouter);
+app.use("/api/tweets", tweetRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Twitter clone backend!");
