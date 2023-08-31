@@ -1,0 +1,29 @@
+.footerIcon_wrapper {
+  flex: 1;
+  font-size: 1.4rem;
+  display: flex;
+  font-weight: 400;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  color: var(--twitter-light);
+  cursor: pointer;
+}
+
+.footerIcon_wrapper .MuiSvgIcon-root {
+  font-size: 1.8rem;
+  color: var(--twitter-light);
+  border-radius: 50%;
+}
+
+.footerIcon_wrapper .MuiSvgIcon-root:hover {
+  background-color: var(--twitter-background);
+}
+
+.footerIcon__counter {
+  margin-left: 1.5rem;
+}
+
+.liked .MuiSvgIcon-root {
+  color: var(--twitter-red) !important;
+}
