@@ -1,22 +1,20 @@
-import React, { useState, useEffect } from "react";
-import WidgetsTrends from "../WidgetsTrends/WidgetsTrends";
-import WidgetsFollow from "../WidgetsFollow/WidgetsFollow";
-import WidgetsPhoto from "../WidgetsPhoto/WidgetsPhoto";
-import SearchWidget from "../../elements/SearchWidget/SearchWidget";
+import React, { useState, useEffect } from 'react';
+import WidgetsTrends from '../WidgetsTrends/WidgetsTrends';
+import SearchWidget from '../../elements/SearchWidget/SearchWidget';
 
-import "../Widgets/Widgets.css";
+import '../Widgets/Widgets.css';
 
 const Widgets = () => {
-  const [posts, setPosts] = useState([]);
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
 
   return (
     <div className='widgets'>
-      <SearchWidget value={text} onChange={(e) => setText(e.target.value)} onClick={() => setText("")} placeholder='Search twitter' />
-
-      {posts.length > 0 && <WidgetsPhoto posts={posts} />}
-
-      <WidgetsFollow />
+      <SearchWidget
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        onClick={() => setText('')}
+        placeholder='Search twitter'
+      />
 
       <WidgetsTrends />
     </div>

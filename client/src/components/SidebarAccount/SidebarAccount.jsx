@@ -17,6 +17,13 @@ const SidebarAccount = () => {
   const open = Boolean(anchorEl);
   const id = open ? "post-popover" : undefined;
 
+  const signout = async () => {
+    try {
+      localStorage.clear();
+      window.location.reload();
+    } catch (error) {}
+  };
+
   return (
     <>
       <Popover
@@ -36,23 +43,32 @@ const SidebarAccount = () => {
           transform: "translate(2rem, -1rem)",
         }}
       >
-        <ul className='post__expandList'>
-          <UserItem name={profile?.fullName || "N/A"} username={profile?.username || "N/A"} photourl='/src/assets/backdrop4.jpg' />
+        <ul className="post__expandList">
+          <UserItem
+            name={profile?.fullName || "N/A"}
+            username={profile?.username || "N/A"}
+            photourl="/src/assets/backdrop4.jpg"
+          />
 
-          <li className='logoutBtn'>
+          <li onClick={signout} className="logoutBtn">
             <h3 style={{ textAlign: "center" }}>Log out</h3>
           </li>
         </ul>
       </Popover>
 
-      <div className='sidebarAccount__wrapper' aria-describedby={id} variant='contained' onClick={onClickExpand}>
-        <div className='sidebarAccount__ava'>
+      <div
+        className="sidebarAccount__wrapper"
+        aria-describedby={id}
+        variant="contained"
+        onClick={onClickExpand}
+      >
+        <div className="sidebarAccount__ava">
           <Avatar src={"/src/assets/backdrop4.jpg"} />
         </div>
-        <div className='sidebarAccount__userData'>
+        <div className="sidebarAccount__userData">
           <h2>{profile && `@${profile.username}`}</h2>
         </div>
-        <div className='sidebarAccount__expandIcon'>
+        <div className="sidebarAccount__expandIcon">
           <ExpandMoreIcon />
         </div>
       </div>

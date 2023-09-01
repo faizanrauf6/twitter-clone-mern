@@ -1,15 +1,15 @@
-import "./TabbarMenu.css";
-import React from "react";
-import PropTypes from "prop-types";
-import { makeStyles, useTheme } from "@mui/styles";
-import { AppBar, Tabs, Tab, Typography, Box } from "@mui/material";
+import './TabbarMenu.css';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { makeStyles, useTheme } from '@mui/styles';
+import { AppBar, Tabs, Tab, Typography, Box } from '@mui/material';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
     <div
-      role="tabpanel"
+      role='tabpanel'
       hidden={value !== index}
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
@@ -17,7 +17,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography component={"span"}>{children}</Typography>
+          <Typography component={'span'}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -33,13 +33,13 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`,
+    'aria-controls': `full-width-tabpanel-${index}`,
   };
 }
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
 }));
 
@@ -54,14 +54,14 @@ export default function FullWidthTabs({ items }) {
 
   return (
     <div className={`tabbarMenu ${classes.root}`}>
-      <AppBar position="static" color="default">
+      <AppBar position='static' color='default'>
         <Tabs
           value={value}
           onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="fullWidth"
-          aria-label="crop and edit image"
+          indicatorColor='primary'
+          textColor='primary'
+          variant='fullWidth'
+          aria-label='crop and edit image'
         >
           {items.map((item) => {
             return (
@@ -78,8 +78,8 @@ export default function FullWidthTabs({ items }) {
 
       {items.map((item) => {
         return (
-          <TabPanel value={value} index={item.id} dir={"row"} key={item.id}>
-            {item["item"]}
+          <TabPanel value={value} index={item.id} dir={'row'} key={item.id}>
+            {item['item']}
           </TabPanel>
         );
       })}

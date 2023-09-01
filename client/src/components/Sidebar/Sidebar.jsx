@@ -3,12 +3,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import SidebarOption from "../SidebarOption/SidebarOption";
 import SidebarAccount from "../SidebarAccount/SidebarAccount";
 import HomeIcon from "@mui/icons-material/Home";
-import SearchIcon from "@mui/icons-material/Search";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import ListAltIcon from "@mui/icons-material/ListAlt";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 import "./Sidebar.css";
 
@@ -18,13 +13,7 @@ const Sidebar = () => {
       <TwitterIcon className="sidebar__twitterIcon" />
 
       <SidebarOption text="Home" Icon={HomeIcon} />
-      <SidebarOption text="Explore" Icon={SearchIcon} />
-      <SidebarOption text="Notifications" Icon={NotificationsNoneIcon} />
-
-      <SidebarOption text="Bookmarks" Icon={BookmarkBorderIcon} />
-      <SidebarOption text="List" Icon={ListAltIcon} />
       <SidebarOption text="Profile" Icon={PermIdentityIcon} />
-      <SidebarOption text="More" Icon={MoreHorizIcon} />
 
       <button variant="outlined" className="sidebar__tweet">
         <div

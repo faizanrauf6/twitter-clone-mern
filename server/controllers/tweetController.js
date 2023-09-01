@@ -142,6 +142,8 @@ exports.updateTweet = async (req, res) => {
 exports.getAllTweets = async (req, res) => {
   try {
     const { id } = req.user;
+    const page = parseInt(req.query.page) || 1; // Get the requested page number from the query parameters
+    const itemsPerPage = page * 10; // Calculate the number of tweets to retrieve for the current page
 
     // Check if the authenticated user exists in the database
     const existingUser = await User.findById(id);
@@ -153,10 +155,13 @@ exports.getAllTweets = async (req, res) => {
       });
     }
 
-    // Retrieve all tweets from the database
+    // Retrieve tweets from the database with pagination
     const tweets = await Tweet.find()
       .populate("user", "fullName username verified slug followers following")
-      .sort({ createdAt: -1 }); // Sort by creation date in descending order
+      .sort({ createdAt: -1 }) // Sort by creation date in descending order
+      .limit(itemsPerPage); // Limit the number of tweets based on the current page
+
+    const tweetCount = await Tweet.countDocuments(); // Get the total number of tweets
 
     const tweetsWithCounts = tweets.map((tweet) => {
       const likeCount = tweet.likes.length;
@@ -178,7 +183,11 @@ exports.getAllTweets = async (req, res) => {
     return res.status(200).json({
       statusCode: 1,
       message: "Tweets retrieved successfully",
-      data: tweetsWithCounts,
+      data: {
+        tweets: tweetsWithCounts,
+        currentPage: page,
+        totalPages: Math.ceil(tweetCount / (page * 10)), // Calculate the total pages based on the current page
+      },
     });
   } catch (error) {
     console.error(error);

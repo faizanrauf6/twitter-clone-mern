@@ -29,8 +29,6 @@ const App = () => {
     setLoading(true);
     try {
       const response = await request.get(api.auth.me);
-      console.log(response.data.data);
-      // return;
       dispatch({
         type: actionTypes.SET_USER,
         user: response?.data?.data || {},

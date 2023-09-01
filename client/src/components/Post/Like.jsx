@@ -10,8 +10,8 @@ const Like = ({ likes, likeAction, unlikeAction }) => {
   const [isLiked, setisLiked] = useState(false);
 
   useEffect(() => {
-    if (user.id && likes) {
-      if (likes.includes(user.id)) {
+    if (user._id && likes) {
+      if (likes.includes(user._id)) {
         setisLiked(true);
       } else {
         setisLiked(false);

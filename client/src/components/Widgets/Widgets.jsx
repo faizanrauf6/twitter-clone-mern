@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import WidgetsTrends from "../WidgetsTrends/WidgetsTrends";
-import WidgetsFollow from "../WidgetsFollow/WidgetsFollow";
 import SearchWidget from "../../elements/SearchWidget/SearchWidget";
 
 import "./Widgets.css";
@@ -17,8 +16,6 @@ const Widgets = () => {
       />
 
       <WidgetsTrends />
-
-      <WidgetsFollow />
     </div>
   );
 };

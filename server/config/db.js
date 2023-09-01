@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const config = require("../config/config");
-mongoose.set("strictQuery", true);
+const mongoose = require('mongoose');
+const config = require('../config/config');
+mongoose.set('strictQuery', true);
 
 // Creating connection with MongoDB
 mongoose
@@ -9,7 +9,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("Database connection is successful");
+    console.log('Database connection is successful');
   })
   .catch((err) => {
     console.log(err);

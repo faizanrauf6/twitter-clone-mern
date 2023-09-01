@@ -19,7 +19,6 @@ const WidgetTrends = () => {
             <ExpandMoreIcon
               aria-describedby={id}
               variant='contained'
-              // onClick={onClickExpand}
             />
           </div>
           <div className='hashtag'>LiveLongIK</div>

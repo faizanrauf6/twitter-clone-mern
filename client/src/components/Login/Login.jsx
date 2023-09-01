@@ -27,7 +27,6 @@ const Login = () => {
   const [loginState, setLoginState] = useState(initialLogin);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
   const [isSigning, setIsSigning] = useState(false);
 
   const cleanupState = () => {
@@ -55,7 +54,6 @@ const Login = () => {
 
       setLoading(false);
     } catch (error) {
-      console.log(error);
       setLoading(false);
       return;
     }
@@ -83,7 +81,6 @@ const Login = () => {
           toast.success(response?.data?.message || "Signin successful");
         }
       } catch (error) {
-        console.log(error);
       }
       setLoading(false);
     }
@@ -111,7 +108,6 @@ const Login = () => {
 
           toggleAuth();
         } catch (error) {
-          console.log(error);
         }
         setLoading(false);
       }
