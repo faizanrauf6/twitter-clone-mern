@@ -9,7 +9,24 @@ require("./config/db");
 require("dotenv").config();
 
 app.use(cookieParser());
-app.use(cors());
+// Allow requests from the specific URL
+const allowedOrigins = ["https://twitter-clone-frontend-xi.vercel.app"];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Specify HTTP methods allowed
+  credentials: true, // Allow credentials (e.g., cookies)
+  optionsSuccessStatus: 204, // Set the response status code for preflight requests
+  allowedHeaders: "Origin,X-Requested-With,Content-Type,Accept,Authorization", // Specify allowed headers
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
