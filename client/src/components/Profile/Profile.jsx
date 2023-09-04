@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import Posts from '../Posts/Posts';
-import TabbarMenu from '../../elements/TabbarMenu/TabbarMenu';
-import ProfileTheme from '../ProfileTheme/ProfileTheme';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import Loader from '../../elements/Loader/Loader';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import Posts from "../Posts/Posts";
+import TabbarMenu from "../../elements/TabbarMenu/TabbarMenu";
+import ProfileTheme from "../ProfileTheme/ProfileTheme";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
+import Loader from "../../elements/Loader/Loader";
 
-import '../Feed/Feed.css';
-import request from '../../utils/request';
-import { api } from '../../constants';
+import "../Feed/Feed.css";
+import request from "../../utils/request";
+import { api } from "../../constants";
 
 const Feed = () => {
   const { username } = useParams();
@@ -17,7 +17,7 @@ const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [profile, setProfile] = useState({});
+  const [profile, setProfile] = useState(null);
 
   const getAllTweetsOfUser = async () => {
     setLoading(true);
@@ -50,7 +50,7 @@ const Feed = () => {
   const items = [
     {
       id: 0,
-      title: 'Tweets',
+      title: "Tweets",
       item: (
         <>
           <Posts posts={posts} cb={postsCallback} />
@@ -59,7 +59,7 @@ const Feed = () => {
     },
     {
       id: 1,
-      title: 'Likes',
+      title: "Likes",
       item: (
         <>
           <Posts posts={likedPosts} cb={postsCallback} />
@@ -75,7 +75,7 @@ const Feed = () => {
       setProfile(response.data.data);
     } catch (error) {
       if (error.response) {
-        history('/');
+        history("/");
       }
     } finally {
       setLoading(false);
@@ -92,25 +92,25 @@ const Feed = () => {
       {loading ? (
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flex: '1',
-            alignItems: 'center',
+            display: "flex",
+            justifyContent: "center",
+            flex: "1",
+            alignItems: "center",
           }}
         >
-          <Loader />{' '}
+          <Loader />{" "}
         </div>
       ) : (
-        <div className='feed'>
-          <div className='profile__header'>
+        <div className="feed">
+          <div className="profile__header">
             <div
-              className='profile__backArrow'
+              className="profile__backArrow"
               onClick={() => history.goBack()}
             >
               <ArrowBackOutlinedIcon />
             </div>
-            <div className='profile__title'>
-              <div className='profile__title_title'>
+            <div className="profile__title">
+              <div className="profile__title_title">
                 <h2>{profile && profile.displayName}</h2>
                 <CheckCircleIcon />
               </div>
@@ -118,7 +118,7 @@ const Feed = () => {
             </div>
           </div>
 
-          <ProfileTheme profile={profile} cb={getUserDetail} />
+          {profile && <ProfileTheme profile={profile} cb={getUserDetail} />}
 
           <TabbarMenu items={items} />
         </div>

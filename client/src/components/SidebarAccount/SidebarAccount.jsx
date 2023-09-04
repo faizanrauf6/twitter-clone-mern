@@ -20,7 +20,7 @@ const SidebarAccount = () => {
   const signout = async () => {
     try {
       localStorage.clear();
-      window.location.reload();
+      window.location.href = "/";
     } catch (error) {}
   };
 

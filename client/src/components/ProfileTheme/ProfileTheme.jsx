@@ -1,31 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 
-import CloseIcon from '@mui/icons-material/Close';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import InsertLinkIcon from '@mui/icons-material/InsertLink';
-import PlaceIcon from '@mui/icons-material/Place';
-import DateRangeIcon from '@mui/icons-material/DateRange';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import CloseIcon from "@mui/icons-material/Close";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import InsertLinkIcon from "@mui/icons-material/InsertLink";
+import PlaceIcon from "@mui/icons-material/Place";
+import DateRangeIcon from "@mui/icons-material/DateRange";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
 
-import Spinner from '../../elements/Spinner/Spinner';
-import { useStateValue } from '../../contexts/StateContextProvider';
+import Spinner from "../../elements/Spinner/Spinner";
+import { useStateValue } from "../../contexts/StateContextProvider";
 
-import './ProfileTheme.css';
-import { convertTimestampToDate } from '../../helpers/convertTimestamptoDate';
-import request from '../../utils/request';
-import { api } from '../../constants';
+import "./ProfileTheme.css";
+import { convertTimestampToDate } from "../../helpers/convertTimestamptoDate";
+import request from "../../utils/request";
+import { api } from "../../constants";
 
 const ProfileTheme = ({ profile, cb }) => {
   const [{ user }] = useStateValue();
+
   const { username } = useParams();
   let isMe = (profile && profile._id) === user._id ? true : false;
   const [isUpdating, setIsUpdating] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
 
   const [openImage, setOpenImage] = useState(false);
-  const [imgsrc, setImgsrc] = useState('');
+  const [imgsrc, setImgsrc] = useState("");
   const onClickImage = (img) => {
     setImgsrc(img);
     setOpenImage(true);
@@ -59,46 +60,46 @@ const ProfileTheme = ({ profile, cb }) => {
 
   return (
     <>
-      <div className='userProfile'>
+      <div className="userProfile">
         <div
-          className='userProfile__theme'
+          className="userProfile__theme"
           style={{
             backgroundImage: `url('/src/assets/backdrop4.jpg')`,
-            backgroundSize: 'cover',
-            backgroundPosition: '0px',
+            backgroundSize: "cover",
+            backgroundPosition: "0px",
           }}
         >
-          <div className='photoWrapper'>
+          <div className="photoWrapper">
             <img
-              src={'/src/assets/backdrop4.jpg'}
-              alt={'Profile image'}
+              src={"/src/assets/backdrop4.jpg"}
+              alt={"Profile image"}
               onClick={() => onClickImage(profile.photoURL)}
             />
           </div>
         </div>
 
-        <div className='infoWrapper'>
-          <div className='userProfile__actions'>
-            <div className='moreWrapper'>
+        <div className="infoWrapper">
+          <div className="userProfile__actions">
+            <div className="moreWrapper">
               <MoreHorizIcon />
             </div>
             {!isMe && (
-              <div className='mailWrapper'>
+              <div className="mailWrapper">
                 <MailOutlineIcon />
               </div>
             )}
             {isMe ? (
-              <div className='followWrapper'>Edit Profile</div>
+              <div className="followWrapper">Edit Profile</div>
             ) : isFollowing ? (
               <div
-                className='followWrapper'
+                className="followWrapper"
                 onClick={() => unfollow(profile._id)}
               >
                 Followed
               </div>
             ) : (
               <div
-                className='followWrapper'
+                className="followWrapper"
                 onClick={() => follow(profile._id)}
               >
                 Follow
@@ -110,40 +111,40 @@ const ProfileTheme = ({ profile, cb }) => {
           {username && <span>{`@${username}`}</span>}
           {profile && <p>{profile.bio}</p>}
 
-          <div className='bioInfo'>
+          <div className="bioInfo">
             {profile && profile.location && (
               <div>
-                {' '}
+                {" "}
                 <PlaceIcon /> <span>{profile.location}</span>
               </div>
             )}
             {profile && profile.website && (
-              <div className='blued'>
-                {' '}
+              <div className="blued">
+                {" "}
                 <InsertLinkIcon /> <span>{profile.website}</span>
               </div>
             )}
             <div>
               {}
-              <DateRangeIcon />{' '}
+              <DateRangeIcon />{" "}
               <span>{convertTimestampToDate(profile.createdAt)}</span>
             </div>
           </div>
 
-          <div className='countInfo'>
+          <div className="countInfo">
             <span>
-              {profile !== undefined && profile.following.length}{' '}
+              {profile !== undefined && profile.following.length}{" "}
               <p>Following</p>
             </span>
             <span>
-              {profile !== undefined && profile.followers.length}{' '}
+              {profile !== undefined && profile.followers.length}{" "}
               <p>Followers</p>
             </span>
 
             {isMe && isUpdating && (
-              <div className='themeSpinner'>
-                {' '}
-                <Spinner />{' '}
+              <div className="themeSpinner">
+                {" "}
+                <Spinner />{" "}
               </div>
             )}
           </div>
