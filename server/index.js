@@ -11,7 +11,8 @@ require("dotenv").config();
 app.use(cookieParser());
 // Allow requests from the specific URL
 const allowedOrigins = [
-  "http://localhost:5173",
+  "http://localhost:5173", // for local development server
+  "http://localhost:4173", // for local build server
   "https://twitter-clone-frontend-xi.vercel.app",
 ];
 
