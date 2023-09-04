@@ -16,6 +16,7 @@ import "./ProfileTheme.css";
 import { convertTimestampToDate } from "../../helpers/convertTimestamptoDate";
 import request from "../../utils/request";
 import { api } from "../../constants";
+import backDrop from "../../assets/backdrop4.jpg";
 
 const ProfileTheme = ({ profile, cb }) => {
   const [{ user }] = useStateValue();
@@ -64,14 +65,14 @@ const ProfileTheme = ({ profile, cb }) => {
         <div
           className="userProfile__theme"
           style={{
-            backgroundImage: `url('/src/assets/backdrop4.jpg')`,
+            backgroundImage: `url(${backDrop})`,
             backgroundSize: "cover",
             backgroundPosition: "0px",
           }}
         >
           <div className="photoWrapper">
             <img
-              src={"/src/assets/backdrop4.jpg"}
+              src={backDrop}
               alt={"Profile image"}
               onClick={() => onClickImage(profile.photoURL)}
             />

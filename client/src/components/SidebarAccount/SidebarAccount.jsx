@@ -6,6 +6,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "./SidebarAccount.css";
 import { useStateValue } from "../../contexts/StateContextProvider";
 import UserItem from "../UserItem/UserItem";
+import backDrop from "../../assets/backdrop4.jpg";
 
 const SidebarAccount = () => {
   const [{ user }] = useStateValue();
@@ -47,7 +48,7 @@ const SidebarAccount = () => {
           <UserItem
             name={profile?.fullName || "N/A"}
             username={profile?.username || "N/A"}
-            photourl="/src/assets/backdrop4.jpg"
+            photourl={backDrop}
           />
 
           <li onClick={signout} className="logoutBtn">
@@ -63,7 +64,7 @@ const SidebarAccount = () => {
         onClick={onClickExpand}
       >
         <div className="sidebarAccount__ava">
-          <Avatar src={"/src/assets/backdrop4.jpg"} />
+          <Avatar src={backDrop} />
         </div>
         <div className="sidebarAccount__userData">
           <h2>{profile && `@${profile.username}`}</h2>

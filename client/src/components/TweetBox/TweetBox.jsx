@@ -17,6 +17,7 @@ import GifOutlinedIcon from "@mui/icons-material/GifOutlined";
 import request from "../../utils/request";
 import { api } from "../../constants";
 import { toast } from "react-toastify";
+import backDrop from "../../assets/backdrop4.jpg";
 
 const TweetBox = ({ cb }) => {
   const [{ user }] = useStateValue();
@@ -97,7 +98,7 @@ const TweetBox = ({ cb }) => {
         <form onSubmit={sendTweet}>
           <div className="tweetBox__wrapperInput">
             <div className="tweetBox__ava">
-              <Avatar src={"/src/assets/backdrop4.jpg"} />
+              <Avatar src={backDrop} />
             </div>
 
             <div className="tweetBox__input">
