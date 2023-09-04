@@ -10,7 +10,10 @@ require("dotenv").config();
 
 app.use(cookieParser());
 // Allow requests from the specific URL
-const allowedOrigins = ["https://twitter-clone-frontend-xi.vercel.app"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://twitter-clone-frontend-xi.vercel.app",
+];
 
 const corsOptions = {
   origin: function (origin, callback) {
